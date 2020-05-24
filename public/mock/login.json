@@ -1,0 +1,10 @@
+{
+  "result": {
+    "user": {
+      "username": "superiris-login"
+    },
+    "token": "123456"
+  },
+  "status": "success",
+  "error": "USER_UNKNOWN"
+}

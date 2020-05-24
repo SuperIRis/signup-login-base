@@ -1,0 +1,17 @@
+
+@value colors: "../../theme/colors.css";
+@value field-border from colors;
+
+.block{
+    margin:20px 0;
+}
+
+.block label{
+    display: block;
+}
+
+input{
+    border: 1px solid field-border;
+    padding: 1rem;
+}
+

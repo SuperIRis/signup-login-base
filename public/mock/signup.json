@@ -1,0 +1,7 @@
+{
+    "result":{
+        "username": "superiris-signed"
+    },
+    "status": "success",
+    "nerror": "Username already in use"
+}

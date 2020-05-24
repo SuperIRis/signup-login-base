@@ -1,0 +1,13 @@
+@value colors: "../../theme/colors.css";
+@value primary-button from colors;
+.infoForm{
+    padding:10px;
+    margin:0;
+}
+
+.submitBtn{
+    background-color:primary-button;
+    padding:1rem;
+    color:rgb(83, 64, 64);
+    width:100%;
+} 

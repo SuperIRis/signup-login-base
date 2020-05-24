@@ -1,0 +1,12 @@
+
+@value colors: "../../../theme/colors.css";
+@value primary-button from colors;
+@value primary-button-text from colors;
+
+button{
+  background-color:primary-button;
+  border:none;
+  color: primary-button-text;
+  padding: 10px;
+  width: 100%;
+}
