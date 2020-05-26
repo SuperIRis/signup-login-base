@@ -25,12 +25,13 @@ export function * authorize(data, authType, mock){
   //We are sending a request, a chance to show loaders
   yield put({type:SENDING_REQUEST, sending:true});
   let response;
+  console.log('authorize', data, authType, mock)
   try{
     if(authType === SIGNUP_REQUEST){
       response = yield call(auth.signup, data, mock);
     }
     else{
-      response = yield call(auth.login, data);
+      response = yield call(auth.login, data, mock);
     }
     return response;
   }
@@ -59,7 +60,7 @@ export function * loginFlow(){
 
     // We call the `authorize` task with the data, and the type (since `authorize` also signs up)
     // Returns `true` if the login was successful, `false` if not
-    const success = yield call(authorize, data, LOGIN_REQUEST);
+    const success = yield call(authorize, data, LOGIN_REQUEST, request.mock);
 
     if (success){
       yield put({ type: SET_AUTH, loggedState: true }); // User is logged in (authorized) after being registered

@@ -13,7 +13,7 @@ import Home from '../home/Home';
 const sagaMiddleware = createSagaMiddleware();
 
 let store;
-const reduxVerbose = false;
+const reduxVerbose = true;
 if(process.env.NODE_ENV === 'development' && reduxVerbose){
   store = createStore(reducer, applyMiddleware(createLogger(), sagaMiddleware));
 }

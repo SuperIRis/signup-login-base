@@ -3,13 +3,18 @@ import { Redirect } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {signupRequest, loginRequest} from '../../actions/actions';
 import UserInfoForm from '../UserInfoForm';
-import Button from '../ui/Button';
-import Facebook from '../../utils/Facebook';
+import FacebookAuth from '../FacebookAuth';
 import errors from '../../models/errorDictionary';
 import {SOCIAL_AUTH_FACEBOOK} from '../../models/constants';
 
+//three dev modes: 
+//to prefill form
 const testData = process.env.NODE_ENV === 'development' && true; // change to false when testing without data
-const mockRequest = 'error';
+//to make a mock request to the API that returns an error
+const mockRequestError = 'error';
+//to make a mock request to the API that returns success and mock data
+const mockRequestSuccess = 'success';
+
 const Signup = ({dispatch, data})=>{
   const prefilledData = {
           fullName: testData ? 'Dev Iris' : '',
@@ -23,43 +28,18 @@ const Signup = ({dispatch, data})=>{
           birthDateYYYY: testData ? '1982': '',
           terms: testData ? true: false,
         };
-  const [serverError, setServerError] = useState();
-  const [facebookLoginBtn, setFacebookLoginBtn] = useState();
+  let serverError;
+
   const [formValues, setFormValues] = useState(prefilledData);
   const [signupMethod, setSignupMethod] = useState(); //custom or FB
 
   const submitForm = values => {
-    console.log('submit')
-    dispatch(signupRequest(values, mockRequest));
+    dispatch(signupRequest(values, mockRequestSuccess));
   };
 
-  const authorizeFacebook = () => {
-    if(Facebook.status === Facebook.AUTHORIZED){
-      //already logged in FB (obtained from facebook init)
-      //check if user has already signed up before
-      console.log("has user signed up before? since fb has authorized")
-      dispatch(loginRequest({ fbid: Facebook.user.id }, 'error')); //second parameter is mock, we want this to fail to be able to test the fb signup without removing the app from our FB account each test
-      prefillFields(Facebook.user);
-    }
-    else{
-      console.log("we want to authorize fb, it has not been auth before")
-      Facebook.login()
-        .then((res) => {
-                         console.log(
-                           res,
-                           "logged!! let's check with server BUT CHANGE HARDCODED ID"
-                         );
-                         dispatch(loginRequest({ fbid: res.id }, 'error')); //second parameter is mock, we want this to fail to be able to test the fb signup without removing the app from our FB account each test
-                         prefillFields(res);
-                         //TODO: now we need to figure out if login was not successful, in which case we prefill the form with data
-                         //
-                       })
-        .catch((res) => {
-          //user didn't authorize FB login window, do nothing, they can try again or use email
-          console.log("error on login", res)
-        });
-    }
-    
+  const onFacebookAuthorized = userData => {
+    dispatch(loginRequest({ fbid: userData.id }, mockRequestError)); //second parameter can be mock, we want this to fail to be able to test the fb signup without removing the app from our FB account each test
+    prefillFields(userData);
   };
 
   const prefillFields = (user)=>{
@@ -73,35 +53,27 @@ const Signup = ({dispatch, data})=>{
     });
   };
 
-  useEffect(()=>{
-    //initialize facebook when component is rendered
-    Facebook.init().then(()=>{
-      //enable fb button
-      setFacebookLoginBtn(
-        <Button onClick={authorizeFacebook}>Facebook Yo!</Button>
-      );
-    });
-  }, []);
+  
+
+  //check if server error. USER_UNKNOWN is not an error for signup, it just means the user hasn't registered before
+  if (data.error && data.error.raw && errors[data.error.raw] !== errors.USER_UNKNOWN && !mockRequestError){
+    serverError = data.error.message;
+  }
 
   if(!data.loggedState){
     return (
       <section>
         <h1>Signup</h1>
         <h2>Register with Facebook</h2>
-        {facebookLoginBtn}
+        <FacebookAuth onAuthorized={onFacebookAuthorized} />
         <h2>Register with your email</h2>
         <UserInfoForm
           onSubmit={submitForm}
           serverError={serverError}
           values={formValues}
           signupMethod={signupMethod}
+          serverError={serverError}
         />
-        {// User unknown is not an error here, since we are not logging in
-        data.error &&
-        data.error.raw &&
-        errors[data.error.raw] !== errors.USER_UNKNOWN ? (
-          <div>{data.error.message}</div>
-        ) : null}
       </section>
     );
   }

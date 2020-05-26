@@ -20,8 +20,12 @@ const auth = {
    */
   login({ username, password, fbid, loginAttempts}, mock) {
     const mockEndpoint = mock === 'error' ? 'mock/error.json' : 'mock/login.json';
+    const realEndpoint = 'mock/login.json'; //update with real endpoint once ready
     const endpoint =
-      process.env.NODE_ENV === 'development' && mock ? mockEndpoint : '';
+      process.env.NODE_ENV === 'development' && mock
+        ? mockEndpoint
+        : realEndpoint;
+
     return request.post(endpoint, { username, password, fbid }).then((res) => {
       if (res.status === SUCCESS_STATUS) {
         if (res.result && res.result.token) {
@@ -49,8 +53,10 @@ const auth = {
    */
   signup({ username, password, email, country, fullName }, mock) {
     const mockEndpoint = mock ==='error' ? 'mock/error.json' : 'mock/signup.json';
+    const realEndpoint = 'mock/login.json'; //update with real endpoint once ready
+
     const endpoint =
-      process.env.NODE_ENV === 'development' && mock ? mockEndpoint : '';
+      process.env.NODE_ENV === 'development' && mock ? mockEndpoint : realEndpoint;
     return request
       .post(endpoint, {
         username,

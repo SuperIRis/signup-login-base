@@ -1,6 +1,6 @@
 **Razzle comes with the "battery-pack included"**:
 
-Built with [Razzle](https://github.com/jaredpalmer/razzle).abs
+Built with [Razzle](https://github.com/jaredpalmer/razzle).
 
 **Test mode**
 All test modes are restricted to development mode (via process.env.NODE_ENV).
