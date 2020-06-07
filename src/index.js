@@ -1,16 +1,15 @@
 //import http from 'http';
 import fs from 'fs';
-import http from 'https';
+import https from 'https';
 
 const options = {
-   key: fs.readFileSync('./ssl/example.com+5-key.pem'),
-   cert: fs.readFileSync('./ssl/example.com+5.pem'),
+    key: fs.readFileSync('./ssl/example.com+5-key.pem'),
+    cert: fs.readFileSync('./ssl/example.com+5.pem'),
 };
 
 let app = require('./server').default;
 
-//change to http if don't need to test in https
-const server = http.createServer(options, app);
+const server = https.createServer(options, app);
 
 let currentApp = app;
 

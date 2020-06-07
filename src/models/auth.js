@@ -19,7 +19,7 @@ const auth = {
    * @param {string} password  User's password
    */
   login({ username, password, fbid, loginAttempts, remember}, mock) {
-    const host = `http://${process.env.HOST}:${Number(process.env.PORT)}/`;
+    const host = `https://${process.env.HOST}:${Number(process.env.PORT)}/`;
     const mockEndpoint =
       mock === 'error' ? host + 'mock/error.json' : host  + 'mock/login.json';
     const realEndpoint = host + '/mock/login.json'; //update with real endpoint once ready
