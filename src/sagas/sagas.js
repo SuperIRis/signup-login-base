@@ -86,12 +86,22 @@ export function * signupFlow(){
 }
 
 export function * getSession(){
-  try {
-    return yield call(auth.checkIfUserIsAuthenticated);
-  }
-  catch (error) {
-    console.log("\noh no!");
-    console.log(error);
+  console.log('get session')
+  while(true){
+    const request = yield take(SESSION_REQUEST);
+    console.log('request', request)
+    try {
+      const success = yield call(auth.checkIfUserIsAuthenticated);
+      if (success) {
+        console.log("USER IS REGISTERED AND LOGGED!");
+        yield put({ type: SET_AUTH, loggedState: true });
+      }
+    }
+    catch (error) {
+      console.log("\noh no!");
+      console.log(error);
+      yield put({ type: SET_ERROR, error });
+    }
   }
 }
 

@@ -23,7 +23,7 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div>
+      <>
         <div>
           <img src={logo} className="Home-logo" alt="logo" />
           <h2>Welcome to MyList test</h2>
@@ -41,7 +41,7 @@ class Home extends React.Component {
           </ul>)
           : (<div>You are ready!</div>)
         }
-      </div>
+      </>
     );
   }
 }

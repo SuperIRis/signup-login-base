@@ -10,6 +10,10 @@ import styles from './App.module.css';
 import Signup from '../Signup';
 import Login from '../Login';
 import Home from '../home/Home';
+import PrivateRoute from '../../router/PrivateRoute';
+import HomeGuest from '../HomeGuest';
+import { sessionRequest, loginRequest } from '../../actions/actions';
+
 const sagaMiddleware = createSagaMiddleware();
 
 let store;
@@ -23,10 +27,22 @@ else{
 
 sagaMiddleware.run(rootSaga);
 
+const checkUserAuth = () =>{
+  const { loggedIn } = store.getState();
+  console.log('-------------', store.getState())
+  console.log(loggedIn)
+  //store.dispatch(sessionRequest());
+  store.dispatch(loginRequest({ fbid: '122' }, true));
+
+
+  return loggedIn;
+}
+
 const App = () => (
   <Provider store={store}>
     <Switch>
-      <Route exact path="/" component={Home} />
+      <Route exact path="/" component={HomeGuest} />
+      <PrivateRoute exact path='/dashboard' Component={Home} loggedState={checkUserAuth}/>
       <Route exact path="/login" component={Login} />
       <Route exact path="/signup" component={Signup} />
     </Switch>

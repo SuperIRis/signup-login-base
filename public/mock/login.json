@@ -3,7 +3,7 @@
     "user": {
       "username": "superiris-login"
     },
-    "token": "123456"
+    "token": "123456-supertoken"
   },
   "status": "success",
   "error": "USER_UNKNOWN"

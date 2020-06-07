@@ -19,24 +19,33 @@ const LoginForm = (props)=>{
   };
   return (
     <Formik
-      initialValues = {defaultData}
-      validationSchema = {loginSchema}
-      onSubmit = {props.onSubmit}
+      initialValues={defaultData}
+      validationSchema={loginSchema}
+      onSubmit={props.onSubmit}
     >
-      {
-        ({ errors, touched }) => (
-          <Form>
-
-            <FullField name='username' label='Username' error={touched.username ? errors.username : null} />
-            <FullField name='password' label='Password' type='password' error={touched.password ? errors.password : null} />
-            <Button type='submit'>
-              Submit
-              </Button>
-
-            {props.serverError ? <div>{props.serverError}</div> : null}
-          </Form>
-      )
-      }
+      {({ errors, touched, values }) => (
+        <Form>
+          <FullField
+            name='username'
+            label='Username'
+            error={touched.username ? errors.username : null}
+          />
+          <FullField
+            name='password'
+            label='Password'
+            type='password'
+            error={touched.password ? errors.password : null}
+          />
+          <FullField
+            label='Remember me'
+            type='checkbox'
+            name='remember'
+            checked={values.remember}
+          />
+          <Button type='submit'>Submit</Button>
+          {props.serverError ? <div>{props.serverError}</div> : null}
+        </Form>
+      )}
     </Formik>
   );
 }

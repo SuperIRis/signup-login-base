@@ -18,17 +18,19 @@ const auth = {
    * @param {string} username  User's username
    * @param {string} password  User's password
    */
-  login({ username, password, fbid, loginAttempts}, mock) {
-    const mockEndpoint = mock === 'error' ? 'mock/error.json' : 'mock/login.json';
-    const realEndpoint = 'mock/login.json'; //update with real endpoint once ready
+  login({ username, password, fbid, loginAttempts, remember}, mock) {
+    const host = `http://${process.env.HOST}:${Number(process.env.PORT)}/`;
+    const mockEndpoint =
+      mock === 'error' ? host + 'mock/error.json' : host  + 'mock/login.json';
+    const realEndpoint = host + '/mock/login.json'; //update with real endpoint once ready
     const endpoint =
       process.env.NODE_ENV === 'development' && mock
         ? mockEndpoint
         : realEndpoint;
-
     return request.post(endpoint, { username, password, fbid }).then((res) => {
+      console.log('LOGIN: post response', res)
       if (res.status === SUCCESS_STATUS) {
-        if (res.result && res.result.token) {
+        if (res.result && res.result.token && remember) {
           localStorage.token = res.result.token;
           localStorage.username = res.result.username || '';
         }
@@ -84,6 +86,7 @@ const auth = {
    * @todo "Remember me" functionality, with a token in localStorage
    */
   checkIfUserIsAuthenticated() {
+    console.log('check if user auth')
     return request.post('mock/auth.json').then((res) => {
       if (res.status === SUCCESS_STATUS) {
         return Promise.resolve(res);
