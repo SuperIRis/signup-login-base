@@ -28,7 +28,6 @@ const auth = {
         ? mockEndpoint
         : realEndpoint;
     return request.post(endpoint, { username, password, fbid }).then((res) => {
-      console.log('LOGIN: post response', res)
       if (res.status === SUCCESS_STATUS) {
         if (res.result && res.result.token && remember) {
           localStorage.token = res.result.token;
