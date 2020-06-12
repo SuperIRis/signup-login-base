@@ -9,7 +9,11 @@ import serialize from 'serialize-javascript';
 import auth from './models/auth';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
-const mockSession = process.env.NODE_ENV === 'development' && true; //change to false for real API calls in dev, change to 'error' for an error result
+//mockSession for authorizing user
+//truthy value for mock authorized user
+//'error' for unauthorized user
+//falsey value for real API calls
+const mockSession = process.env.NODE_ENV === 'development' && 'error'; 
 
 const server = express();
 server

@@ -12,7 +12,7 @@ import HomeGuest from '../HomeGuest';
 const App = () => (
     <Switch>
       <Route exact path="/" component={HomeGuest} />
-      <PrivateRoute exact path='/dashboard' Component={Home} />
+      <PrivateRoute exact path='/dashboard' Component={Home} redirectTo={'/'} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/signup" component={Signup} />
     </Switch>
