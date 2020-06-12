@@ -2,7 +2,8 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-const PrivateRoute = ({ Component, redirectTo, data, dispatch, ...routeProps }) => {
+const PrivateRoute = ({ component, redirectTo, data, dispatch, ...routeProps }) => {
+  const Component = component;
   const defaultRoute = '/login';
   return (
     <Route

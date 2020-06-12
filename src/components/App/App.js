@@ -10,11 +10,11 @@ import HomeGuest from '../HomeGuest';
 
 const App = () => (
   <Switch>
-    <GuestRoute exact path='/' Component={HomeGuest} />
-    <PrivateRoute exact path='/dashboard' Component={Home} redirectTo={'/'} />
-    <GuestRoute exact path='/login' Component={Login} />
-    <GuestRoute exact path='/signup' Component={Signup} />
-    <Route exact path='/faq' Component={HomeGuest} />
+    <GuestRoute exact path='/' component={HomeGuest} />
+    <PrivateRoute exact path='/dashboard' component={Home} redirectTo={'/'} />
+    <GuestRoute exact path='/login' component={Login} />
+    <GuestRoute exact path='/signup' component={Signup} />
+    <Route exact path='/faq' component={HomeGuest} />
   </Switch>
 );
 
