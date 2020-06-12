@@ -85,23 +85,18 @@ export function * signupFlow(){
   }
 }
 
-export function * getSession(){
-  console.log('get session')
-  while(true){
-    const request = yield take(SESSION_REQUEST);
-    console.log('request', request)
-    try {
-      const success = yield call(auth.checkIfUserIsAuthenticated);
-      if (success) {
-        console.log("USER IS REGISTERED AND LOGGED!");
-        yield put({ type: SET_AUTH, loggedState: true });
-      }
+export function * getSession(mock){
+  try {
+    const success = yield call(auth.checkIfUserIsAuthenticated, mock);
+    if (success) {
+      // we have user information in success object, we can use it
+      yield put({ type: SET_AUTH, loggedState: true });
     }
-    catch (error) {
-      console.log("\noh no!");
-      console.log(error);
-      yield put({ type: SET_ERROR, error });
-    }
+  }
+  catch (error) {
+    console.log("\noh no!");
+    console.log(error);
+    yield put({ type: SET_ERROR, error });
   }
 }
 
@@ -112,7 +107,7 @@ export function * getSession(){
 export function * sessionFlow(){
   while (true){
     const request = yield take(SESSION_REQUEST);
-    const success = yield call(getSession);
+    const success = yield call(getSession, request.mock);
     if(success){
       yield put({ type: SET_AUTH, loggedState: true });
     }

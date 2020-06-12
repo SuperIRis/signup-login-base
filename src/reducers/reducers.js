@@ -6,7 +6,6 @@ const initialState = {
 }
 
 function reducer( state = initialState, action){
-  console.log('reducers', state)
   switch (action.type) {
     case SENDING_REQUEST:
       return {...state, sending:action.sending}

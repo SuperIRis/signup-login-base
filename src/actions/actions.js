@@ -55,8 +55,8 @@ export function signupRequest(data, mock){
   * We want to figure out if a user has an active session in server
   */
 
-  export function sessionRequest(){
-    return {type:SESSION_REQUEST};
+  export function sessionRequest(mock){
+    return {type:SESSION_REQUEST, mock};
   }
 
   /**

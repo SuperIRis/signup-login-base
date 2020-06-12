@@ -1,28 +1,53 @@
 import App from './components/app/App';
 import React from 'react';
-import { StaticRouter } from 'react-router-dom';
 import express from 'express';
+import { StaticRouter } from 'react-router-dom';
 import { renderToString } from 'react-dom/server';
+import { Provider } from 'react-redux';
+import configureStore from './common/configureStore';
+import serialize from 'serialize-javascript';
+import auth from './models/auth';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
+const mockSession = process.env.NODE_ENV === 'development' && true; //change to false for real API calls in dev, change to 'error' for an error result
 
 const server = express();
 server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .get('/*', (req, res) => {
-    const context = {};
-    const markup = renderToString(
-      <StaticRouter context={context} location={req.url}>
-        <App />
-      </StaticRouter>
-    );
+    auth.checkIfUserIsAuthenticated(mockSession)
+    .then(data=>{
+      //user authenticated
+      const preloadedState = { loggedState: true, sending:false };
+      createPage(req, res, preloadedState);
+    })
+    .catch(error=>{
+      //not authenticated
+      const preloadedState = { loggedState: false, sending: false };
+      createPage(req, res, preloadedState);
+      process.env.NODE_ENV === 'development' && console.log(error);
+    })
+    
+  });
 
-    if (context.url) {
-      res.redirect(context.url);
-    } else {
-      res.status(200).send(
-        `<!doctype html>
+const createPage = (req, res, preloadedState)=>{
+  const store = configureStore(preloadedState);
+  const finalState = store.getState();
+  const context = {};
+  const markup = renderToString(
+    <StaticRouter context={context} location={req.url}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </StaticRouter>
+  );
+
+  if (context.url) {
+    res.redirect(context.url);
+  } else {
+    res.status(200).send(
+      `<!doctype html>
     <html lang="">
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -43,10 +68,13 @@ server
     </head>
     <body>
         <div id="root">${markup}</div>
+        <script>
+          window.__PRELOADED_STATE__ = ${serialize(finalState)}
+        </script>
     </body>
+    
 </html>`
-      );
-    }
-  });
-
+    );
+  }
+}
 export default server;

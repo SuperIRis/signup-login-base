@@ -3,8 +3,8 @@ import fs from 'fs';
 import https from 'https';
 
 const options = {
-    key: fs.readFileSync('./ssl/example.com+5-key.pem'),
-    cert: fs.readFileSync('./ssl/example.com+5.pem'),
+  key: fs.readFileSync('./ssl2/localhost+2-key.pem'),
+  cert: fs.readFileSync('./ssl2/localhost+2.pem'),
 };
 
 let app = require('./server').default;
