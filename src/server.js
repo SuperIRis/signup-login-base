@@ -13,29 +13,28 @@ const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 //truthy value for mock authorized user
 //'error' for unauthorized user
 //falsey value for real API calls
-const mockSession = process.env.NODE_ENV === 'development' && 'error'; 
+const mockSession = process.env.NODE_ENV === 'development' && 'error';
 
 const server = express();
 server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .get('/*', (req, res) => {
-    auth.checkIfUserIsAuthenticated(mockSession)
-    .then(data=>{
-      //user authenticated
-      const preloadedState = { loggedState: true, sending:false };
-      createPage(req, res, preloadedState);
-    })
-    .catch(error=>{
-      //not authenticated
-      const preloadedState = { loggedState: false, sending: false };
-      createPage(req, res, preloadedState);
-      process.env.NODE_ENV === 'development' && console.log(error);
-    })
-    
+    auth
+      .checkIfUserIsAuthenticated(mockSession)
+      .then((data) => {
+        //user authenticated
+        const preloadedState = { loggedState: true, sending: false };
+        createPage(req, res, preloadedState);
+      })
+      .catch((error) => {
+        //not authenticated
+        const preloadedState = { loggedState: false, sending: false };
+        createPage(req, res, preloadedState);
+      });
   });
 
-const createPage = (req, res, preloadedState)=>{
+const createPage = (req, res, preloadedState) => {
   const store = configureStore(preloadedState);
   const finalState = store.getState();
   const context = {};
@@ -59,11 +58,7 @@ const createPage = (req, res, preloadedState)=>{
         <title>Giftlist</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="//fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap" rel="stylesheet">
-        ${
-          assets.client.css
-            ? `<link rel="stylesheet" href="${assets.client.css}">`
-            : ''
-        }
+        ${assets.client.css ? `<link rel="stylesheet" href="${assets.client.css}">` : ''}
         ${
           process.env.NODE_ENV === 'production'
             ? `<script src="${assets.client.js}" defer></script>`
@@ -80,5 +75,5 @@ const createPage = (req, res, preloadedState)=>{
 </html>`
     );
   }
-}
+};
 export default server;
