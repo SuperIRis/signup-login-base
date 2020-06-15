@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Formik, Form, Field } from 'formik';
 import styles from './UserInfoForm.module.css';
-import FullField from '../FullField';
-import DateField from '../DateField';
+import FullField from '../FormElements/FullField';
+import DateField from '../FormElements/DateField';
+import Label from '../FormElements/Label';
+import Select from '../FormElements/Select';
 import * as Yup from 'yup';
 
 const userInfoSchema = Yup.object().shape({
@@ -47,56 +49,35 @@ const CustomUserInfoForm = (props) => {
   //creating initialValues object without password and passwordConfirmation
 
   return (
-    <Formik
-      enableReinitialize
-      initialValues={props.values}
-      validationSchema={userInfoSchema}
-      onSubmit={props.onSubmit}
-    >
+    <Formik enableReinitialize initialValues={props.values} validationSchema={userInfoSchema} onSubmit={props.onSubmit}>
       {({ errors, touched, values }) => (
         <Form className={styles.infoForm}>
+          <FullField label='Username*' name='username' error={touched.username ? errors.username : null} />
           <FullField
-            label='Username'
-            name='username'
-            error={touched.username ? errors.username : null}
-          />
-          <FullField
-            label='Password'
+            label='Password*'
             name='password'
             type='password'
             error={touched.password ? errors.password : null}
           />
           <FullField
-            label='Repeat Password'
+            label='Repeat Password*'
             name='passwordConfirmation'
             type='password'
-            error={
-              touched.passwordConfirmation
-                ? errors.passwordConfirmation
-                : null
-            }
+            error={touched.passwordConfirmation ? errors.passwordConfirmation : null}
           />
           <FullField
-            label='Full name'
+            label='Full name*'
             name='fullName'
             error={touched.fullName ? errors.fullName : null}
             value={values.fullName}
           />
-          <FullField
-            label='Email'
-            name='email'
-            error={touched.email ? errors.email : null}
-            value={values.email}
-          />
-          <label htmlFor='country'>Country</label>
-          <Field as='select' name='country' id='country'>
-            <option value=''>Select</option>
+          <FullField label='Email*' name='email' error={touched.email ? errors.email : null} value={values.email} />
+          <Label htmlFor='country'>Country*</Label>
+          <Select name='country' id='country'>
             <option value='Netherlands'>Netherlands</option>
             <option value='Mexico'>Mexico</option>
-          </Field>
-          {errors.country && touched.country ? (
-            <div>{errors.country}</div>
-          ) : null}
+          </Select>
+          {errors.country && touched.country ? <div>{errors.country}</div> : null}
           <DateField label='Birth date' name='birthDate' errors={errors} />
           <FullField
             label='I accept terms and conditions'

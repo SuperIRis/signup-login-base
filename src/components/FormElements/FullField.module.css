@@ -1,0 +1,28 @@
+@value colors: "../../theme/colors.css";
+@value sizes: "../../theme/sizes.css";
+@value field-border from colors;
+@value light-font-color from colors;
+@value input-font-size from sizes;
+@value input-focus from colors;
+
+.block{
+    margin:20px 0;
+}
+
+.label{
+    display: block;
+    color: light-font-color;
+    margin:10px 0;
+}
+
+input[type=text], input[type=password]{
+    border: 1px solid field-border;
+    font-size: input-font-size;
+    padding: 1rem;
+    width: 100%;
+}
+
+input[type=text]:focus, input[type=password]:focus{
+  outline-color: input-focus;
+}
+

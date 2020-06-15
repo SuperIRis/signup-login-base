@@ -1,0 +1,54 @@
+
+@value colors: "../../theme/colors.css";
+@value sizes: "../../theme/sizes.css";
+@value field-border from colors;
+@value light-font-color from colors;
+@value input-font-size-small from sizes;
+
+.block{
+    margin:20px 0;
+}
+
+.block label{
+    display: block;
+}
+
+
+input{
+    border: 1px solid field-border;
+    padding: 1rem;
+}
+
+.subLabel{
+    font-size:input-font-size-small;
+    color: light-font-color;
+    opacity:0.8;
+}
+
+.dayBlock{
+    width: 80px;
+}
+
+.monthBlock{
+    margin-left:10px;
+    width: calc(100% - 80px - 10px);
+}
+
+.yearBlock{
+    width: 160px;
+}
+.dayBlock, .monthBlock, .yearBlock{
+    display: inline-block;
+    margin-bottom:10px;
+}
+
+.dayBlock input, .monthBlock input, .yearBlock input{
+    width:100%;
+}
+
+@media (min-width: 500px){
+    .monthBlock{
+        margin-right:10px;
+        width: calc(100% - 80px - 20px - 160px);
+    }
+}

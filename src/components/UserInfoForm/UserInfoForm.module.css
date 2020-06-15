@@ -1,13 +1,25 @@
 @value colors: "../../theme/colors.css";
+@value sizes: "../../theme/sizes.css";
 @value primary-button from colors;
+@value block-size from sizes;
+@value main-padding-size from sizes;
+@value light-font-color from colors;
 .infoForm{
-    padding:10px;
     margin:0;
 }
 
 .submitBtn{
     background-color:primary-button;
+    color: white;
+    border:none;
+    font-size:14px;
+    font-weight: bold;
     padding:1rem;
-    color:rgb(83, 64, 64);
     width:100%;
+} 
+
+
+/* this should be in a generic section */
+section:global{
+    padding:block-size main-padding-size;
 } 

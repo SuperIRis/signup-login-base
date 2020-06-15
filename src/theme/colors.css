@@ -1,4 +1,15 @@
-@value field-border: #e6e6e6;
-@value primary-button: #65a549;
+@value palette1: #F8F6F7;
+@value palette2: #A6B6CC;
+@value palette3: #D7CD87;
+@value palette4: #8E9BA8;
+@value palette5: #87676D;
+@value palette6: #252422;
+@value palette7: #777;
+
+@value field-border: #f3f3f3;
+@value primary-button: palette4;
 @value primary-button-text: #ffffff;
-@value main-bg: #ccc;
+@value main-bg: palette1;
+@value main-font-color: palette6;
+@value light-font-color: palette7;
+@value input-focus: palette3;
