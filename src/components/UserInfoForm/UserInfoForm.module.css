@@ -6,6 +6,7 @@
 @value light-font-color from colors;
 .infoForm{
     margin:0;
+    position: relative;
 }
 
 .submitBtn{
@@ -14,6 +15,7 @@
     border:none;
     font-size:14px;
     font-weight: bold;
+    margin-top: block-size;
     padding:1rem;
     width:100%;
 } 

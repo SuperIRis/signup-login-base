@@ -1,0 +1,39 @@
+@value sizes: "../../theme/sizes.css";
+@value input-font-size-small from sizes;
+
+.block{
+  position: relative;
+}
+
+.block input[type=text], .block input[type=password], .block select, .input{
+  border:2px solid red;
+  outline-color: red;
+  border-radius:3px;
+}
+
+.message{
+  color:red;
+  font-size: input-font-size-small;
+}
+
+.block:after{
+    content: '';
+    background-color:red;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20x%3D%220px%22%20y%3D%220px%22%20viewBox%3D%220%200%2016%2016%22%20style%3D%22enable-background%3Anew%200%200%2016%2016%3B%22%20xml%3Aspace%3D%22preserve%22%3E%0A%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M8%2C0C3.6%2C0%2C0%2C3.6%2C0%2C8s3.6%2C8%2C8%2C8s8-3.6%2C8-8S12.4%2C0%2C8%2C0z%20M11%2C4c0.6%2C0%2C1%2C0.4%2C1%2C1s-0.4%2C1-1%2C1%20s-1-0.4-1-1S10.4%2C4%2C11%2C4z%20M5%2C4c0.6%2C0%2C1%2C0.4%2C1%2C1S5.6%2C6%2C5%2C6S4%2C5.6%2C4%2C5S4.4%2C4%2C5%2C4z%20M11%2C12.2c-0.6-1-1.7-1.7-3-1.7s-2.4%2C0.7-3%2C1.7%20l-1.3-0.8C4.6%2C10%2C6.2%2C9%2C8%2C9s3.4%2C1%2C4.3%2C2.4L11%2C12.2z%22%2F%3E%0A%3C%2Fsvg%3E%0A');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size:50%;
+    border-radius:3px;
+    display: block;
+    height:20px;
+    padding: 1rem 0.7rem;
+    position:absolute;
+    right:0;
+    top:0;
+    width:10px;
+}
+
+label.checkbox:before{
+  border:2px solid red;
+  border-radius:3px;
+}

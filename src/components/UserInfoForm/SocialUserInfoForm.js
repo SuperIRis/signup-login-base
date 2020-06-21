@@ -4,6 +4,7 @@ import styles from './UserInfoForm.module.css';
 import FullField from '../FormElements/FullField';
 import DateField from '../FormElements/DateField';
 import Label from '../FormElements/Label';
+import Select from '../FormElements/Select';
 import { SOCIAL_AUTH_FACEBOOK, SOCIAL_AUTH_GOOGLE } from '../../models/constants';
 import * as Yup from 'yup';
 
@@ -25,15 +26,15 @@ const userInfoSchema = Yup.object().shape({
     .required('Required'),
   country: Yup.string().required('Required'),
   birthDateDD: Yup.number()
-    .typeError('Please input a valid birth day')
-    .min(1, 'Please input a valid birth day')
-    .max(31, 'Please input a valid birth day')
-    .integer('Please input a valid birth day'),
+    .typeError('Invalid birth day')
+    .min(1, 'Invalid birth day')
+    .max(31, 'Invalid birth day')
+    .integer('Invalid birth day'),
   birthDateYYYY: Yup.number()
-    .typeError('Please input a valid birth year')
-    .min(1920, 'Please input a valid birth year')
-    .max(2002, 'Please input a valid birth year')
-    .integer('Please input a valid birth year'),
+    .typeError('Invalid birth year')
+    .min(1920, 'Invalid birth year')
+    .max(2002, 'Invalid birth year')
+    .integer('Invalid birth year'),
   terms: Yup.boolean().oneOf([true], 'Accept Terms & Conditions is required'),
 });
 
@@ -54,13 +55,11 @@ const SocialUserInfoForm = (props) => {
             value={values.fullName}
           />
           <FullField label='Email' name='email' error={touched.email ? errors.email : null} value={values.email} />
-          <Label htmlFor='country'>Country</Label>
-          <Field as='select' name='country' id='country'>
-            <option value=''>Select</option>
+          <Label htmlFor='country'>Country*</Label>
+          <Select name='country' id='country' error={touched.country ? errors.country : null} value={values.country}>
             <option value='Netherlands'>Netherlands</option>
             <option value='Mexico'>Mexico</option>
-          </Field>
-          {errors.country && touched.country ? <div>{errors.country}</div> : null}
+          </Select>
           <DateField label='Birth date' name='birthDate' errors={errors} />
           <FullField
             label='I accept terms and conditions'

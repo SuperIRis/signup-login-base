@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Formik, Form, Field } from 'formik';
+import React from 'react';
+import { Formik, Form } from 'formik';
 import styles from './UserInfoForm.module.css';
 import FullField from '../FormElements/FullField';
 import DateField from '../FormElements/DateField';
@@ -33,15 +33,15 @@ const userInfoSchema = Yup.object().shape({
     .required('Required'),
   country: Yup.string().required('Required'),
   birthDateDD: Yup.number()
-    .typeError('Please input a valid birth day')
-    .min(1, 'Please input a valid birth day')
-    .max(31, 'Please input a valid birth day')
-    .integer('Please input a valid birth day'),
+    .typeError('Invalid day')
+    .min(1, 'Invalid day')
+    .max(31, 'Invalid day')
+    .integer('Invalid day'),
   birthDateYYYY: Yup.number()
-    .typeError('Please input a valid birth year')
-    .min(1920, 'Please input a valid birth year')
-    .max(2002, 'Please input a valid birth year')
-    .integer('Please input a valid birth year'),
+    .typeError('Invalid year')
+    .min(1920, 'Invalid year')
+    .max(2002, 'Invalid year')
+    .integer('Invalid year'),
   terms: Yup.boolean().oneOf([true], 'Accept Terms & Conditions is required'),
 });
 
@@ -72,12 +72,13 @@ const CustomUserInfoForm = (props) => {
             value={values.fullName}
           />
           <FullField label='Email*' name='email' error={touched.email ? errors.email : null} value={values.email} />
+
           <Label htmlFor='country'>Country*</Label>
-          <Select name='country' id='country'>
+          <Select name='country' id='country' error={touched.country ? errors.country : null} value={values.country}>
             <option value='Netherlands'>Netherlands</option>
             <option value='Mexico'>Mexico</option>
           </Select>
-          {errors.country && touched.country ? <div>{errors.country}</div> : null}
+
           <DateField label='Birth date' name='birthDate' errors={errors} />
           <FullField
             label='I accept terms and conditions'

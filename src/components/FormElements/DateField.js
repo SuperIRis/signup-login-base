@@ -1,8 +1,9 @@
 import React from 'react';
-import styles from './DateField.module.css';
 import { Field } from 'formik';
 import Select from './Select';
 import Label from './Label';
+import styles from './DateField.module.css';
+import errorStyles from './Errors.module.css';
 
 const monthsString = [
   'January',
@@ -52,7 +53,7 @@ const getMonthField = (name, format, style, error) => {
     return (
       <div key={name + FORMATS.MM} className={styles.monthBlock}>
         <label className={styles.subLabel}>Month</label>
-        <Select name={name + FORMATS.MM} id={name + FORMATS.MM} hideDefault={true}>
+        <Select name={name + FORMATS.MM} id={name + FORMATS.MM} hideDefault={true} error={error}>
           <option value=''>--- Select month ---</option>
           {monthsString.map((month, index) => (
             <option key={`${name}${FORMATS.MM}${index}`} value={index + 1}>
@@ -60,7 +61,6 @@ const getMonthField = (name, format, style, error) => {
             </option>
           ))}
         </Select>
-        {error ? <div className='form-error'>{error}</div> : null}
       </div>
     );
   }
@@ -72,8 +72,10 @@ const getDayField = (name, format, style, error) => {
     return (
       <div key={name + FORMATS.DD} className={styles.dayBlock}>
         <label className={styles.subLabel}>Day</label>
-        <Field name={name + FORMATS.DD} id={name + FORMATS.DD} key={name} maxLength='2' />
-        {error ? <div className='form-error'>{error}</div> : null}
+        <div className={error && errorStyles.block}>
+          <Field name={name + FORMATS.DD} id={name + FORMATS.DD} key={name} maxLength='2' type={'text'} />
+        </div>
+        {error ? <div className={errorStyles.message}>{error}</div> : null}
       </div>
     );
   }
@@ -85,8 +87,10 @@ const getYearField = (name, format, style, error) => {
     return (
       <div key={name + FORMATS.YYYY} className={styles.yearBlock}>
         <label className={styles.subLabel}>Year</label>
-        <Field name={name + FORMATS.YYYY} id={name + FORMATS.YYYY} key={name} />
-        {error ? <div className='form-error'>{error}</div> : null}
+        <div className={error && errorStyles.block}>
+          <Field name={name + FORMATS.YYYY} id={name + FORMATS.YYYY} key={name} maxLength='4' type={'text'} />
+          {error ? <div className={errorStyles.message}>{error}</div> : null}
+        </div>
       </div>
     );
   }

@@ -14,6 +14,7 @@ const LoginForm = (props) => {
   const defaultData = {
     username: defaults.username || '',
     password: defaults.password || '',
+    remember: false,
   };
   return (
     <Formik initialValues={defaultData} validationSchema={loginSchema} onSubmit={props.onSubmit}>

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Facebook from './Facebook';
 import Button from '../ui/Button';
 
-const FacebookAuth = ({onAuthorized})=>{
+const FacebookAuth = ({ onAuthorized, children }) => {
   const [enabled, setEnabled] = useState();
-
+  const buttonLabel = children || 'Facebook Yo!';
   const authorizeFacebook = () => {
     if (Facebook.status === Facebook.AUTHORIZED) {
       //already logged in FB (obtained from facebook init)
@@ -29,17 +29,18 @@ const FacebookAuth = ({onAuthorized})=>{
         //enable fb button
         setEnabled(true);
       });
+    } else if (Facebook.status === Facebook.AUTHORIZED) {
+      setEnabled(true);
     } else {
       setEnabled(false);
     }
   }, []);
 
-  if(enabled){
-    return <Button onClick={authorizeFacebook}>Facebook Yo!</Button>;
+  if (enabled) {
+    return <Button onClick={authorizeFacebook}>{buttonLabel}</Button>;
+  } else {
+    return <Button loading={true}>{buttonLabel}</Button>;
   }
-  else{
-    return <Button loading={true}>Facebook Yo!</Button>;
-  }
-}
+};
 
 export default FacebookAuth;

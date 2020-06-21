@@ -43,7 +43,6 @@ const Signup = ({ dispatch, data }) => {
   };
 
   const prefillFields = (user) => {
-    setSignupMethod(SOCIAL_AUTH_FACEBOOK);
     setFormValues({
       ...formValues,
       fullName: user.name,
@@ -51,13 +50,13 @@ const Signup = ({ dispatch, data }) => {
       socialMethod: SOCIAL_AUTH_FACEBOOK,
       socialId: user.id,
     });
+    setSignupMethod(SOCIAL_AUTH_FACEBOOK);
   };
 
   //check if server error. USER_UNKNOWN is not an error for signup, it just means the user hasn't registered before
   if (data.error && data.error.raw && errors[data.error.raw] !== errors.USER_UNKNOWN && !mockRequestError) {
     serverError = data.error.message;
   }
-
   if (!data.loggedState) {
     return (
       <section>
@@ -75,8 +74,6 @@ const Signup = ({ dispatch, data }) => {
       </section>
     );
   } else {
-    console.log('we are not redirecting now');
-    //return <div>Go to login man</div>
     return <Redirect to={{ pathname: '/' }} />;
   }
 };

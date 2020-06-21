@@ -1,16 +1,41 @@
 import React from 'react';
 import styles from './FullField.module.css';
+import errorStyles from './Errors.module.css';
 import Label from './Label';
 import { Field } from 'formik';
 
-const FullField = ({ label, name, error, validate, type, value }) => {
+const InputField = ({ name, validate, type, error, label }) => {
   return (
     <div className={styles.block} data-field={name + '-field'}>
       <Label htmlFor={name}>{label}</Label>
-      <Field name={name} id={name} validate={validate} type={type || 'text'} />
-      {error ? <div className='form-error'>Error: {error}</div> : null}
+      <div className={error && errorStyles.block}>
+        <Field name={name} id={name} validate={validate} type={type || 'text'} />
+      </div>
+      {error ? <div className={errorStyles.message}>{error}</div> : null}
     </div>
   );
+};
+
+const Checkbox = ({ name, validate, type, error, label }) => {
+  //checkbox is different since it has label in different place and different className
+  return (
+    <div className={styles.checkboxBlock} data-field={name + '-field'}>
+      <Field name={name} id={name} validate={validate} type={type || 'text'} />
+      <Label htmlFor={name} className={error && errorStyles.checkbox}>
+        {label}
+      </Label>
+      {error ? <div className={errorStyles.message}>{error}</div> : null}
+    </div>
+  );
+};
+
+const FullField = (props) => {
+  const { type } = props;
+  if (type === 'checkbox') {
+    return <Checkbox {...props} />;
+  } else {
+    return <InputField {...props} />;
+  }
 };
 
 export default FullField;
