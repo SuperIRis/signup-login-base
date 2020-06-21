@@ -1,11 +1,8 @@
 Base app with signup and login functionalities. Facebook login is integrated, and with it is pretty simple to add other social logins.
 
-Built with [Razzle](https://github.com/jaredpalmer/razzle), 
-[React] (https://reactjs.org/), 
-[Redux] (https://redux.js.org/), 
-[Redux saga] (https://redux-saga.js.org/).
+Built with [Razzle](https://github.com/jaredpalmer/razzle), [React](https://reactjs.org), [Redux](https://redux.js.org), [Redux saga](https://redux-saga.js.org).
 
-Styled with [CSS Modules] (https://github.com/css-modules/css-modules).
+Styled with [CSS Modules](https://github.com/css-modules/css-modules).
 
 
 **Test mode**
