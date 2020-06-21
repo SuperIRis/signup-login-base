@@ -1,6 +1,9 @@
-**Razzle comes with the "battery-pack included"**:
+Base app with signup and login functionalities. Facebook login is integrated, and with it is pretty simple to add other social logins.
 
-Built with [Razzle](https://github.com/jaredpalmer/razzle).
+Built with [Razzle](https://github.com/jaredpalmer/razzle), [React] (https://reactjs.org/), [Redux] (https://redux.js.org/), [Redux saga] (https://redux-saga.js.org/).
+
+Styled with [CSS Modules] (https://github.com/css-modules/css-modules).
+
 
 **Test mode**
 All test modes are restricted to development mode (via process.env.NODE_ENV).
