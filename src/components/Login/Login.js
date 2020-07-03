@@ -11,7 +11,7 @@ const testData = process.env.NODE_ENV === 'development' && true; // change to fa
 //to make a mock request to the API that returns success and mock data
 const mockRequestSuccess = 'success';
 
-const Login = ({ dispatch, data }) => {
+export const Login = ({ dispatch, data }) => {
   const prefilledData = {
     username: testData ? 'superiris' : '',
     password: testData ? 'Admin123' : '',
@@ -26,7 +26,7 @@ const Login = ({ dispatch, data }) => {
   };
 
   if (data.loggedState) {
-    return <Redirect to={{ pathname: '/' }} />;
+    return <Redirect to={{ pathname: '/dashboard' }} />;
   } else {
     return (
       <section>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 //for routes ONLY available for guest users (not authenticated users) like HomeGuest or Register
-const GuestRoute = ({ component, redirectTo, data, dispatch, ...routeProps }) => {
+export const GuestRoute = ({ component, redirectTo, data, dispatch, ...routeProps }) => {
   const Component = component;
   const defaultRoute = '/dashboard';
   return (

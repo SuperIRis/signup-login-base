@@ -36,6 +36,7 @@
     "postcss-scss": "^2.0.0",
     "prettier": "^1.19.1",
     "razzle-plugin-postcss": "^2.2.4",
+    "redux-mock-store": "^1.5.4",
     "stylelint": "^13.3.3",
     "typescript": "^2.4.1",
     "webpack-cli": "^3.3.11"
@@ -43,6 +44,10 @@
   "jest": {
     "setupFiles": [
       "<rootDir>/src/setupTests.js"
-    ]
+    ],
+    "coverageReporters": ["html", "text"],
+    "collectCoverage": true,
+    "coverageDirectory":"./"
+    
   }
 }

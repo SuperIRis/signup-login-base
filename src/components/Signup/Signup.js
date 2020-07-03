@@ -15,7 +15,7 @@ const mockRequestError = 'error';
 //to make a mock request to the API that returns success and mock data
 const mockRequestSuccess = 'success';
 
-const Signup = ({ dispatch, data }) => {
+export const Signup = ({ dispatch, data }) => {
   const prefilledData = {
     fullName: testData ? 'Dev Iris' : '',
     email: testData ? 'iris@iris.com' : '',
@@ -74,7 +74,7 @@ const Signup = ({ dispatch, data }) => {
       </section>
     );
   } else {
-    return <Redirect to={{ pathname: '/' }} />;
+    return <Redirect to={{ pathname: '/dashboard' }} />;
   }
 };
 

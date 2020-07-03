@@ -1,23 +1,23 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { sessionRequest } from '../../actions/actions';
 import logo from './react.svg';
 
-class Home extends React.Component {
-  constructor(props){
+export class Home extends React.Component {
+  constructor(props) {
     super(props);
-    this.state = {loggedState: false, counter:0};
+    this.state = { loggedState: false, counter: 0 };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     //this.setState({counter:1})
-    if(this.state.counter===0){
+    if (this.state.counter === 0) {
       this.authUserIfSession();
     }
   }
 
-  authUserIfSession () {
+  authUserIfSession() {
     this.props.dispatch(sessionRequest());
   }
 
@@ -25,31 +25,30 @@ class Home extends React.Component {
     return (
       <>
         <div>
-          <img src={logo} className="Home-logo" alt="logo" />
+          <img src={logo} className='Home-logo' alt='logo' />
           <h2>Welcome to MyList test</h2>
         </div>
-        {
-          this.state.loggedState ?
-        
-          (<ul>
+        {this.state.loggedState ? (
+          <ul>
             <li>
-              <Link to="/login">Login</Link>
+              <Link to='/login'>Login</Link>
             </li>
             <li>
-              <Link to="/signup">Signup</Link>
+              <Link to='/signup'>Signup</Link>
             </li>
-          </ul>)
-          : (<div>You are ready!</div>)
-        }
+          </ul>
+        ) : (
+          <div>You are ready!</div>
+        )}
       </>
     );
   }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   return {
-    data:state
-  }
+    data: state,
+  };
 }
 
 export default connect(mapStateToProps)(Home);
