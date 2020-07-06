@@ -46,8 +46,7 @@
       "<rootDir>/src/setupTests.js"
     ],
     "coverageReporters": ["html", "text"],
-    "collectCoverage": true,
-    "coverageDirectory":"./"
+    "coverageDirectory":"./tests"
     
   }
 }

@@ -1,24 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { sessionRequest } from '../../actions/actions';
 import logo from './react.svg';
 
 export class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = { loggedState: false, counter: 0 };
-  }
-
-  componentDidMount() {
-    //this.setState({counter:1})
-    if (this.state.counter === 0) {
-      this.authUserIfSession();
-    }
-  }
-
-  authUserIfSession() {
-    this.props.dispatch(sessionRequest());
   }
 
   render() {

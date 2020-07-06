@@ -1,11 +1,4 @@
-import {
-  SIGNUP_REQUEST,
-  SENDING_REQUEST,
-  SET_AUTH,
-  LOGIN_REQUEST,
-  SESSION_REQUEST,
-  SET_ERROR,
-} from '../actions/constants';
+import { SIGNUP_REQUEST, SENDING_REQUEST, SET_AUTH, LOGIN_REQUEST, SET_ERROR } from '../actions/constants';
 import { take, call, put, fork } from 'redux-saga/effects';
 import auth from '../models/auth';
 
@@ -25,17 +18,16 @@ export function* authorize(data, authType, mock) {
   //We are sending a request, a chance to show loaders
   yield put({ type: SENDING_REQUEST, sending: true });
   let response;
-  console.log('authorize', data, authType, mock);
   try {
     if (authType === SIGNUP_REQUEST) {
       response = yield call(auth.signup, data, mock);
-    } else {
+    } else if (authType === LOGIN_REQUEST) {
       response = yield call(auth.login, data, mock);
+    } else {
+      throw new Error('authType required');
     }
     return response;
   } catch (error) {
-    console.log('\noh no!');
-    console.log(error);
     yield put({ type: SET_ERROR, error });
   } finally {
     yield put({ type: SENDING_REQUEST, sending: false });
@@ -75,35 +67,6 @@ export function* signupFlow() {
     const data = { ...request.data };
     const success = yield call(authorize, data, SIGNUP_REQUEST, request.mock);
     if (success) {
-      console.log('USER IS REGISTERED AND LOGGED!');
-      yield put({ type: SET_AUTH, loggedState: true });
-    }
-  }
-}
-
-export function* getSession(mock) {
-  try {
-    const success = yield call(auth.checkIfUserIsAuthenticated, mock);
-    if (success) {
-      // we have user information in success object, we can use it
-      yield put({ type: SET_AUTH, loggedState: true });
-    }
-  } catch (error) {
-    console.log('\noh no!');
-    console.log(error);
-    yield put({ type: SET_ERROR, error });
-  }
-}
-
-/**
- * Check if user has active session
- */
-
-export function* sessionFlow() {
-  while (true) {
-    const request = yield take(SESSION_REQUEST);
-    const success = yield call(getSession, request.mock);
-    if (success) {
       yield put({ type: SET_AUTH, loggedState: true });
     }
   }
@@ -113,5 +76,5 @@ export function* sessionFlow() {
 export default function* root() {
   yield fork(signupFlow);
   yield fork(loginFlow);
-  yield fork(sessionFlow);
+  //yield fork(sessionFlow);
 }

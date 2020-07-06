@@ -9,6 +9,18 @@ const Facebook = {
   appId: '2918674861552290',
   apiVersion: 'v6.0',
   status: 'uninitialized',
+  loadSDK(d, s, id) {
+    //load FB SDK
+    var js,
+      fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {
+      return;
+    }
+    js = d.createElement(s);
+    js.id = id;
+    js.src = 'https://connect.facebook.net/en_US/sdk.js';
+    fjs.parentNode.insertBefore(js, fjs);
+  },
   init() {
     return new Promise((res, rej) => {
       if (typeof document === 'undefined') {
@@ -36,18 +48,7 @@ const Facebook = {
               verbose && process.env.NODE_ENV === 'development' && console.log('Facebook init with status:', response);
             });
           };
-          //load FB SDK
-          (function(d, s, id) {
-            var js,
-              fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {
-              return;
-            }
-            js = d.createElement(s);
-            js.id = id;
-            js.src = 'https://connect.facebook.net/en_US/sdk.js';
-            fjs.parentNode.insertBefore(js, fjs);
-          })(document, 'script', 'facebook-jssdk');
+          Facebook.loadSDK(document, 'script', 'facebook-jssdk');
         } catch (error) {
           rej(error);
         }

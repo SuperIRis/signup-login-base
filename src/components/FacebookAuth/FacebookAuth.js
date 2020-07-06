@@ -17,7 +17,6 @@ const FacebookAuth = ({ onAuthorized, children }) => {
         })
         .catch((err) => {
           //user didn't authorize FB login window, do nothing, they can try again or use email
-          // console.log("error on login", err)
         });
     }
   };
