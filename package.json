@@ -45,8 +45,6 @@
     "setupFiles": [
       "<rootDir>/src/setupTests.js"
     ],
-    "coverageReporters": ["html", "text"],
-    "coverageDirectory":"./tests"
-    
+    "coverageReporters": ["html", "text"]
   }
 }
