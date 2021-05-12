@@ -30,7 +30,7 @@
     "enzyme-adapter-react-16": "^1.15.2",
     "husky": "^4.2.3",
     "lint-staged": "^10.0.8",
-    "postcss": "^7.0.27",
+    "postcss": "^8.2.10",
     "postcss-loader": "^3.0.0",
     "postcss-modules-values": "^3.0.0",
     "postcss-scss": "^2.0.0",
