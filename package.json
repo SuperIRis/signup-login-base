@@ -9,7 +9,7 @@
     "start:prod": "NODE_ENV=production node build/server.js"
   },
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "formik": "^2.1.4",
     "localStorage": "^1.0.4",
     "node-fetch": "^2.6.0",
